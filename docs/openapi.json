@@ -1,0 +1,363 @@
+{
+  "openapi" : "3.0.0",
+  "info" : {
+    "title" : "HL7 Listener Service",
+    "description" : "Service for HL7Listener allowing for receiving HL7 messages",
+    "version" : "1.0.0"
+  },
+  "servers" : [
+    {
+      "url": "https://virtserver.swaggerhub.com/ACR6/acrconnect-hl7-listener-service/1.0.0",
+      "description": "API Demo Version 1.0.0"
+    },
+    {
+      "url": "https://virtserver.swaggerhub.com/ACR6/acrconnect-hl7-listener-service/2.0.0",
+      "description": "API Demo Version 2.0.0"
+    },
+    {
+      "url": "https://virtserver.swaggerhub.com/ACR6/acrconnect-hl7-listener-service/3.0.0",
+      "description": "API Demo Version 3.0.0"
+    }
+  ],
+  "tags" : [ {
+    "name" : "Listeners",
+    "description" : "Listeners for HL7 messages"
+  }, {
+    "name" : "Logs",
+    "description" : "Operations for logging actions"
+  }, {
+    "name" : "Status",
+    "description" : "Checks the status and version of the listener"
+  } ],
+  "paths" : {
+    "/api/Listeners" : {
+      "get" : {
+        "tags" : [ "Listeners" ],
+        "summary" : "Gets all available listeners",
+        "description" : "Obtains all available listeners for the running service.\n",
+        "operationId" : "GetListeners",
+        "responses" : {
+          "200" : {
+            "description" : "Available listeners",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/HL7MessageListener"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Listeners" ],
+        "summary" : "Adds a listener",
+        "description" : "Adds a listener to the system",
+        "operationId" : "PostListener",
+        "requestBody" : {
+          "description" : "Listener to add",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/HL7MessageListener"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Listener created"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/api/Listeners/{id}" : {
+      "get" : {
+        "tags" : [ "Listeners" ],
+        "summary" : "Gets a listener",
+        "description" : "Obtains a listener specified by its id.\n",
+        "operationId" : "GetListener",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Optional id for a specific listener",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Available listeners",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HL7MessageListener"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad input parameter"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Listeners" ],
+        "summary" : "Updates a listener",
+        "description" : "Updates a listener specified by the given id\n",
+        "operationId" : "PutListener",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the updating listener",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/HL7MessageListener"
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Updated listener",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/HL7MessageListener"
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Mismatch between passed id and listener id"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Listeners" ],
+        "summary" : "Delete listener",
+        "description" : "This can only be done by the logged in user.",
+        "operationId" : "deleteUser",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "The id of the listener to be deleted",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Listener successfully deleted"
+          },
+          "500" : {
+            "description" : "Server error"
+          }
+        }
+      }
+    },
+    "/api/Logs" : {
+      "get" : {
+        "tags" : [ "Logs" ],
+        "summary" : "Gets the logs",
+        "description" : "Obtains the 20 most recent messages sorted by descending logged time.",
+        "operationId" : "GetLogs",
+        "responses" : {
+          "200" : {
+            "description" : "The logged messages",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/HL7ListenerLog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Logs/in/{seconds}" : {
+      "get" : {
+        "tags" : [ "Logs" ],
+        "summary" : "Get a list of all logs within a timespan of given senconds.",
+        "operationId" : "GetWithin",
+        "parameters" : [ {
+          "name" : "seconds",
+          "in" : "path",
+          "description" : "Specify number of seconds, to retrieve all recent logs logged in the timespan.",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "minimum" : 0,
+            "type" : "integer",
+            "format" : "int32"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "The logged messages within the given timespan",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/HL7ListenerLog"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Status/healthcheck" : {
+      "get" : {
+        "tags" : [ "Status" ],
+        "summary" : "Checks the health status of the server",
+        "operationId" : "GetHealthCheck",
+        "responses" : {
+          "200" : {
+            "description" : "The health of the server",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ServerStatus"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Status/version" : {
+      "get" : {
+        "tags" : [ "Status" ],
+        "summary" : "Checks the version of the server",
+        "operationId" : "GetVersion",
+        "responses" : {
+          "200" : {
+            "description" : "The version of the server",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/ServerVersion"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "HL7MessageListener" : {
+        "required" : [ "IPAddress", "Id", "Name", "Port", "Status" ],
+        "type" : "object",
+        "properties" : {
+          "Id" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 1
+          },
+          "IPAddress" : {
+            "type" : "string",
+            "example" : "0.0.0.0"
+          },
+          "Port" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 800
+          },
+          "Status" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 1
+          }
+        }
+      },
+      "HL7ListenerLog" : {
+        "required" : [ "Id", "Message", "Time" ],
+        "type" : "object",
+        "properties" : {
+          "Id" : {
+            "type" : "integer",
+            "format" : "int32",
+            "example" : 1
+          },
+          "Time" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "Message" : {
+            "type" : "string",
+            "example" : "This is a message"
+          }
+        }
+      },
+      "ServerStatus" : {
+        "type" : "string",
+        "example" : "Healthy"
+      },
+      "ServerVersion" : {
+        "type" : "string",
+        "example" : "v1.0.28"
+      }
+    },
+    "requestBodies" : {
+      "HL7MessageListener" : {
+        "description" : "Listener that needs to be added to the store",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/HL7MessageListener"
+            }
+          },
+          "application/xml" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/HL7MessageListener"
+            }
+          }
+        },
+        "required" : true
+      }
+    }
+  }
+}
