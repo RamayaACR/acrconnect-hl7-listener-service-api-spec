@@ -1,222 +1,222 @@
-Swagger: 2.0
-Info:
-  Version: v1
-  Title: ACR HL7 Listener
-  Description: Service for receiving HL7 messages
-  Extensions: {}
-Paths:
+swagger: '2.0'
+info:
+  version: v1
+  title: ACR HL7 Listener
+  description: Service for receiving HL7 messages
+  extensions: {}
+paths:
   /api/Listeners:
-    Get:
-      Tags:
+    get:
+      tags:
       - Listeners
-      Summary: Gets all available listeners
-      Description: Obtains all available listeners for the running service.
-      OperationId: GetListeners
-      Consumes: []
-      Produces: []
-      Parameters: []
-      Responses:
+      summary: Gets all available listeners
+      description: Obtains all available listeners for the running service.
+      operationId: GetListeners
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
         200:
-          Description: Returns the available listeners
-          Extensions: {}
+          description: Returns the available listeners
+          extensions: {}
         500:
-          Description: Bad input parameter
-          Extensions: {}
-      Extensions: {}
-    Post:
-      Tags:
+          description: Bad input parameter
+          extensions: {}
+      extensions: {}
+    post:
+      tags:
       - Listeners
-      OperationId: PostListener
-      Consumes:
+      operationId: PostListener
+      consumes:
       - application/json-patch+json
       - application/json
       - text/json
       - application/*+json
-      Produces:
+      produces:
       - text/plain
       - application/json
       - text/json
-      Parameters:
-      - Name: listener
-        In: body
-        Extensions: {}
-        Schema:
-          Ref: '#/definitions/HL7MessageListener'
-          Extensions: {}
-      Responses:
+      parameters:
+      - name: listener
+        in: body
+        extensions: {}
+        schema:
+          ref: '#/definitions/HL7MessageListener'
+          extensions: {}
+      responses:
         200:
-          Description: Success
-          Schema:
-            Ref: '#/definitions/HL7MessageListener'
-            Extensions: {}
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
+          description: Success
+          schema:
+            ref: '#/definitions/HL7MessageListener'
+            extensions: {}
+          extensions: {}
+      extensions: {}
+    extensions: {}
   /api/Listeners/{id}:
-    Get:
-      Tags:
+    get:
+      tags:
       - Listeners
-      OperationId: GetListener
-      Consumes: []
-      Produces: []
-      Parameters:
-      - Name: id
-        In: path
-        Required: true
-        Type: integer
-        Format: int32
-        Extensions: {}
-      Responses:
+      operationId: GetListener
+      consumes: []
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+        extensions: {}
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Put:
-      Tags:
+          description: Success
+          extensions: {}
+      extensions: {}
+    put:
+      tags:
       - Listeners
-      OperationId: PutListener
-      Consumes:
+      operationId: PutListener
+      consumes:
       - application/json-patch+json
       - application/json
       - text/json
       - application/*+json
-      Produces: []
-      Parameters:
-      - Name: id
-        In: path
-        Required: true
-        Type: integer
-        Format: int32
-        Extensions: {}
-      - Name: listener
-        In: body
-        Extensions: {}
-        Schema:
-          Ref: '#/definitions/HL7MessageListener'
-          Extensions: {}
-      Responses:
+      produces: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+        extensions: {}
+      - name: listener
+        in: body
+        extensions: {}
+        schema:
+          ref: '#/definitions/HL7MessageListener'
+          extensions: {}
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Delete:
-      Tags:
+          description: Success
+          extensions: {}
+      extensions: {}
+    delete:
+      tags:
       - Listeners
-      OperationId: DeleteListener
-      Consumes: []
-      Produces:
+      operationId: DeleteListener
+      consumes: []
+      produces:
       - text/plain
       - application/json
       - text/json
-      Parameters:
-      - Name: id
-        In: path
-        Required: true
-        Type: integer
-        Format: int32
-        Extensions: {}
-      Responses:
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        format: int32
+        extensions: {}
+      responses:
         200:
-          Description: Success
-          Schema:
-            Ref: '#/definitions/HL7MessageListener'
-            Extensions: {}
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
+          description: Success
+          schema:
+            ref: '#/definitions/HL7MessageListener'
+            extensions: {}
+          extensions: {}
+      extensions: {}
+    extensions: {}
   /api/Logs:
-    Get:
-      Tags:
+    get:
+      tags:
       - Logs
-      OperationId: Get
-      Consumes: []
-      Produces: []
-      Parameters: []
-      Responses:
+      operationId: Get
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
+          description: Success
+          extensions: {}
+      extensions: {}
+    extensions: {}
   /api/Logs/in/{seconds}:
-    Get:
-      Tags:
+    get:
+      tags:
       - Logs
-      Summary: Get list of all logs with in a timespan of give senconds.
-      OperationId: GetWithin
-      Consumes: []
-      Produces: []
-      Parameters:
-      - Name: seconds
-        In: path
-        Description: Specify number of seconds, to retrieve all recent logs logged in the timespan.
-        Required: true
-        Type: integer
-        Format: int32
-        Extensions: {}
-      Responses:
+      summary: Get list of all logs with in a timespan of give senconds.
+      operationId: GetWithin
+      consumes: []
+      produces: []
+      parameters:
+      - name: seconds
+        in: path
+        description: Specify number of seconds, to retrieve all recent logs logged in the timespan.
+        required: true
+        type: integer
+        format: int32
+        extensions: {}
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
+          description: Success
+          extensions: {}
+      extensions: {}
+    extensions: {}
   /api/Status/healthcheck:
-    Get:
-      Tags:
+    get:
+      tags:
       - Status
-      OperationId: HealthCheck
-      Consumes: []
-      Produces: []
-      Parameters: []
-      Responses:
+      operationId: HealthCheck
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
+          description: Success
+          extensions: {}
+      extensions: {}
+    extensions: {}
   /api/Status/version:
-    Get:
-      Tags:
+    get:
+      tags:
       - Status
-      OperationId: Version
-      Consumes: []
-      Produces: []
-      Parameters: []
-      Responses:
+      operationId: Version
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
         200:
-          Description: Success
-          Extensions: {}
-      Extensions: {}
-    Extensions: {}
-Definitions:
+          description: Success
+          extensions: {}
+      extensions: {}
+    extensions: {}
+definitions:
   HL7MessageListener:
-    Type: object
-    Properties:
+    type: object
+    properties:
       id:
-        Format: int32
-        Type: integer
-        Extensions: {}
+        format: int32
+        type: integer
+        extensions: {}
       ipAddress:
-        Type: string
-        Extensions: {}
+        type: string
+        extensions: {}
       port:
-        Format: int32
-        Type: integer
-        Extensions: {}
+        format: int32
+        type: integer
+        extensions: {}
       name:
-        Type: string
-        Extensions: {}
+        type: string
+        extensions: {}
       status:
-        Format: int32
-        Enum:
+        format: int32
+        enum:
         - Idle
         - Listening
-        Type: integer
-        Extensions: {}
-    Example:
-      Id: 1
-      IPAddress: 0.0.0.0
-      Port: 50500
-      Name: Test HL7
-    Extensions: {}
-Extensions: {}
+        type: integer
+        extensions: {}
+    example:
+      id: 1
+      iPAddress: 0.0.0.0
+      port: 50500
+      name: Test HL7
+    extensions: {}
+extensions: {}
