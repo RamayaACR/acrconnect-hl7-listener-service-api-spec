@@ -1,80 +1,222 @@
-FORMAT: 1A
-HOST: http://polls.apiblueprint.org/
-
-# acrconnecthl7listenerservicetest
-
-Polls is a simple API allowing consumers to view polls and vote in them.
-
-## Questions Collection [/questions]
-
-### List All Questions [GET]
-
-+ Response 200 (application/json)
-
-        [
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
-                    }
-                ]
-            }
-        ]
-
-### Create a New Question [POST]
-
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
-
-    + Body
-
-            {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
-                    {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
-                    }
-                ]
-            }
+Swagger: 2.0
+Info:
+  Version: v1
+  Title: ACR HL7 Listener
+  Description: Service for receiving HL7 messages
+  Extensions: {}
+Paths:
+  /api/Listeners:
+    Get:
+      Tags:
+      - Listeners
+      Summary: Gets all available listeners
+      Description: Obtains all available listeners for the running service.
+      OperationId: GetListeners
+      Consumes: []
+      Produces: []
+      Parameters: []
+      Responses:
+        200:
+          Description: Returns the available listeners
+          Extensions: {}
+        500:
+          Description: Bad input parameter
+          Extensions: {}
+      Extensions: {}
+    Post:
+      Tags:
+      - Listeners
+      OperationId: PostListener
+      Consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      Produces:
+      - text/plain
+      - application/json
+      - text/json
+      Parameters:
+      - Name: listener
+        In: body
+        Extensions: {}
+        Schema:
+          Ref: '#/definitions/HL7MessageListener'
+          Extensions: {}
+      Responses:
+        200:
+          Description: Success
+          Schema:
+            Ref: '#/definitions/HL7MessageListener'
+            Extensions: {}
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+  /api/Listeners/{id}:
+    Get:
+      Tags:
+      - Listeners
+      OperationId: GetListener
+      Consumes: []
+      Produces: []
+      Parameters:
+      - Name: id
+        In: path
+        Required: true
+        Type: integer
+        Format: int32
+        Extensions: {}
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Put:
+      Tags:
+      - Listeners
+      OperationId: PutListener
+      Consumes:
+      - application/json-patch+json
+      - application/json
+      - text/json
+      - application/*+json
+      Produces: []
+      Parameters:
+      - Name: id
+        In: path
+        Required: true
+        Type: integer
+        Format: int32
+        Extensions: {}
+      - Name: listener
+        In: body
+        Extensions: {}
+        Schema:
+          Ref: '#/definitions/HL7MessageListener'
+          Extensions: {}
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Delete:
+      Tags:
+      - Listeners
+      OperationId: DeleteListener
+      Consumes: []
+      Produces:
+      - text/plain
+      - application/json
+      - text/json
+      Parameters:
+      - Name: id
+        In: path
+        Required: true
+        Type: integer
+        Format: int32
+        Extensions: {}
+      Responses:
+        200:
+          Description: Success
+          Schema:
+            Ref: '#/definitions/HL7MessageListener'
+            Extensions: {}
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+  /api/Logs:
+    Get:
+      Tags:
+      - Logs
+      OperationId: Get
+      Consumes: []
+      Produces: []
+      Parameters: []
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+  /api/Logs/in/{seconds}:
+    Get:
+      Tags:
+      - Logs
+      Summary: Get list of all logs with in a timespan of give senconds.
+      OperationId: GetWithin
+      Consumes: []
+      Produces: []
+      Parameters:
+      - Name: seconds
+        In: path
+        Description: Specify number of seconds, to retrieve all recent logs logged in the timespan.
+        Required: true
+        Type: integer
+        Format: int32
+        Extensions: {}
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+  /api/Status/healthcheck:
+    Get:
+      Tags:
+      - Status
+      OperationId: HealthCheck
+      Consumes: []
+      Produces: []
+      Parameters: []
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+  /api/Status/version:
+    Get:
+      Tags:
+      - Status
+      OperationId: Version
+      Consumes: []
+      Produces: []
+      Parameters: []
+      Responses:
+        200:
+          Description: Success
+          Extensions: {}
+      Extensions: {}
+    Extensions: {}
+Definitions:
+  HL7MessageListener:
+    Type: object
+    Properties:
+      id:
+        Format: int32
+        Type: integer
+        Extensions: {}
+      ipAddress:
+        Type: string
+        Extensions: {}
+      port:
+        Format: int32
+        Type: integer
+        Extensions: {}
+      name:
+        Type: string
+        Extensions: {}
+      status:
+        Format: int32
+        Enum:
+        - Idle
+        - Listening
+        Type: integer
+        Extensions: {}
+    Example:
+      Id: 1
+      IPAddress: 0.0.0.0
+      Port: 50500
+      Name: Test HL7
+    Extensions: {}
+Extensions: {}
