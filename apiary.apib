@@ -1,1 +1,80 @@
-{"swagger":"2.0","info":{"version":"v1","title":"ACR HL7 Listener"},"paths":{"/api/Listeners":{"get":{"tags":["Listeners"],"operationId":"GetListeners","consumes":[],"produces":[],"parameters":[],"responses":{"200":{"description":"Success"}}},"post":{"tags":["Listeners"],"operationId":"PostListener","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"listener","in":"body","required":false,"schema":{"$ref":"#/definitions/HL7MessageListener"}}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/HL7MessageListener"}}}}},"/api/Listeners/{id}":{"get":{"tags":["Listeners"],"operationId":"GetListener","consumes":[],"produces":[],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success"}}},"put":{"tags":["Listeners"],"operationId":"PutListener","consumes":["application/json-patch+json","application/json","text/json","application/*+json"],"produces":[],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"},{"name":"listener","in":"body","required":false,"schema":{"$ref":"#/definitions/HL7MessageListener"}}],"responses":{"200":{"description":"Success"}}},"delete":{"tags":["Listeners"],"operationId":"DeleteListener","consumes":[],"produces":["text/plain","application/json","text/json"],"parameters":[{"name":"id","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success","schema":{"$ref":"#/definitions/HL7MessageListener"}}}}},"/api/Logs":{"get":{"tags":["Logs"],"operationId":"Get","consumes":[],"produces":[],"parameters":[],"responses":{"200":{"description":"Success"}}}},"/api/Logs/in/{seconds}":{"get":{"tags":["Logs"],"operationId":"GetWithin","consumes":[],"produces":[],"parameters":[{"name":"seconds","in":"path","required":true,"type":"integer","format":"int32"}],"responses":{"200":{"description":"Success"}}}},"/api/Status/healthcheck":{"get":{"tags":["Status"],"operationId":"HealthCheck","consumes":[],"produces":[],"parameters":[],"responses":{"200":{"description":"Success"}}}},"/api/Status/version":{"get":{"tags":["Status"],"operationId":"Version","consumes":[],"produces":[],"parameters":[],"responses":{"200":{"description":"Success"}}}}},"definitions":{"HL7MessageListener":{"type":"object","properties":{"id":{"format":"int32","type":"integer"},"ipAddress":{"type":"string"},"port":{"format":"int32","type":"integer"},"name":{"type":"string"},"status":{"format":"int32","enum":[0,1],"type":"integer"}}}}}
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# acrconnecthl7listenerservicetest
+
+Polls is a simple API allowing consumers to view polls and vote in them.
+
+## Questions Collection [/questions]
+
+### List All Questions [GET]
+
++ Response 200 (application/json)
+
+        [
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 2048
+                    }, {
+                        "choice": "Python",
+                        "votes": 1024
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 512
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 256
+                    }
+                ]
+            }
+        ]
+
+### Create a New Question [POST]
+
+You may create your own question using this action. It takes a JSON
+object containing a question and a collection of answers in the
+form of choices.
+
++ Request (application/json)
+
+        {
+            "question": "Favourite programming language?",
+            "choices": [
+                "Swift",
+                "Python",
+                "Objective-C",
+                "Ruby"
+            ]
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+                "question": "Favourite programming language?",
+                "published_at": "2015-08-05T08:40:51.620Z",
+                "choices": [
+                    {
+                        "choice": "Swift",
+                        "votes": 0
+                    }, {
+                        "choice": "Python",
+                        "votes": 0
+                    }, {
+                        "choice": "Objective-C",
+                        "votes": 0
+                    }, {
+                        "choice": "Ruby",
+                        "votes": 0
+                    }
+                ]
+            }
