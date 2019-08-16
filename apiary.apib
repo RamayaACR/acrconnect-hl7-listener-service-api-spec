@@ -114,6 +114,9 @@ paths:
       responses:
         200:
           description: Updated listener
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
           
         400:
           description: Mismatch between passed id and listener id
@@ -239,6 +242,12 @@ definitions:
         
       status:
         
+        description: >2-
+
+
+          0 = Idle
+
+          1 = Listening
         enum:
         - Idle
         - Listening
