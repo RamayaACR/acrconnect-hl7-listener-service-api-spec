@@ -19,6 +19,13 @@ paths:
       responses:
         200:
           description: Returns the available listeners
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7MessageListener'
+              
+            
           
         500:
           description: Bad input parameter
@@ -68,11 +75,14 @@ paths:
         in: path
         required: true
         type: integer
-        format: int32
+        
         
       responses:
         200:
           description: Listener created
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
           
         500:
           description: Server error
@@ -93,7 +103,7 @@ paths:
         in: path
         required: true
         type: integer
-        format: int32
+        
         
       - name: listener
         in: body
@@ -129,7 +139,7 @@ paths:
         in: path
         required: true
         type: integer
-        format: int32
+        
         
       responses:
         200:
@@ -173,7 +183,7 @@ paths:
         description: Specify number of seconds, to retrieve all recent logs logged in the timespan.
         required: true
         type: integer
-        format: int32
+        
         
       responses:
         200:
@@ -214,21 +224,21 @@ definitions:
     type: object
     properties:
       id:
-        format: int32
+        
         type: integer
         
       ipAddress:
         type: string
         
       port:
-        format: int32
+        
         type: integer
         
       name:
         type: string
         
       status:
-        format: int32
+        
         enum:
         - Idle
         - Listening
@@ -250,7 +260,7 @@ definitions:
         type: string
         
       status:
-        format: int32
+        
         type: integer
         
       detail:
