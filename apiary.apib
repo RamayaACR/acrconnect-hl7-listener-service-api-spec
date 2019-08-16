@@ -13,7 +13,8 @@ paths:
       description: Obtains all available listeners for the running service.
       operationId: GetListeners
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters: []
       responses:
         200:
@@ -26,16 +27,13 @@ paths:
     post:
       tags:
       - Listeners
+      summary: Adds a listener
+      description: Adds a listener.
       operationId: PostListener
       consumes:
-      - application/json-patch+json
       - application/json
-      - text/json
-      - application/*+json
       produces:
-      - text/plain
       - application/json
-      - text/json
       parameters:
       - name: listener
         in: body
@@ -44,11 +42,14 @@ paths:
           $ref: '#/definitions/HL7MessageListener'
           
       responses:
-        200:
-          description: Success
+        201:
+          description: Listener created
           schema:
             $ref: '#/definitions/HL7MessageListener'
             
+          
+        500:
+          description: Server error
           
       
     
@@ -56,9 +57,12 @@ paths:
     get:
       tags:
       - Listeners
+      summary: Adds a listener
+      description: Adds a listener.
       operationId: GetListener
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters:
       - name: id
         in: path
@@ -68,19 +72,22 @@ paths:
         
       responses:
         200:
-          description: Success
+          description: Listener created
+          
+        500:
+          description: Server error
           
       
     put:
       tags:
       - Listeners
+      summary: Updates a listener
+      description: Updates a listener specified by the given id.
       operationId: PutListener
       consumes:
-      - application/json-patch+json
       - application/json
-      - text/json
-      - application/*+json
-      produces: []
+      produces:
+      - application/json
       parameters:
       - name: id
         in: path
@@ -96,18 +103,27 @@ paths:
           
       responses:
         200:
-          description: Success
+          description: Updated listener
+          
+        400:
+          description: Mismatch between passed id and listener id
+          schema:
+            $ref: '#/definitions/ProblemDetails'
+            
+          
+        500:
+          description: Server error
           
       
     delete:
       tags:
       - Listeners
+      summary: Deletes a listener
+      description: Deletes a listener.
       operationId: DeleteListener
       consumes: []
       produces:
-      - text/plain
       - application/json
-      - text/json
       parameters:
       - name: id
         in: path
@@ -117,10 +133,13 @@ paths:
         
       responses:
         200:
-          description: Success
+          description: Listener deleted
           schema:
             $ref: '#/definitions/HL7MessageListener'
             
+          
+        500:
+          description: Server error
           
       
     
@@ -130,7 +149,8 @@ paths:
       - Logs
       operationId: Get
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters: []
       responses:
         200:
@@ -145,7 +165,8 @@ paths:
       summary: Get list of all logs with in a timespan of give senconds.
       operationId: GetWithin
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters:
       - name: seconds
         in: path
@@ -218,5 +239,28 @@ definitions:
       iPAddress: 0.0.0.0
       port: 50500
       name: Test HL7
+    
+  ProblemDetails:
+    type: object
+    properties:
+      type:
+        type: string
+        
+      title:
+        type: string
+        
+      status:
+        format: int32
+        type: integer
+        
+      detail:
+        type: string
+        
+      instance:
+        type: string
+        
+    additionalProperties:
+      type: object
+      
     
 
