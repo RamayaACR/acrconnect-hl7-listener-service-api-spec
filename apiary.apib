@@ -9,7 +9,7 @@ paths:
     get:
       tags:
       - Listeners
-      summary: Gets all available listeners
+      summary: Get all listeners
       description: Obtains all available listeners for the running service.
       operationId: GetListeners
       consumes: []
@@ -34,7 +34,7 @@ paths:
     post:
       tags:
       - Listeners
-      summary: Adds a listener
+      summary: Post listener
       description: Adds a listener.
       operationId: PostListener
       consumes:
@@ -64,8 +64,8 @@ paths:
     get:
       tags:
       - Listeners
-      summary: Adds a listener
-      description: Adds a listener.
+      summary: Get listener
+      description: Gets a listener by its id.
       operationId: GetListener
       consumes: []
       produces:
@@ -79,7 +79,7 @@ paths:
         
       responses:
         200:
-          description: Listener created
+          description: Success
           schema:
             $ref: '#/definitions/HL7MessageListener'
             
@@ -91,7 +91,7 @@ paths:
     put:
       tags:
       - Listeners
-      summary: Updates a listener
+      summary: Put listener
       description: Updates a listener specified by the given id.
       operationId: PutListener
       consumes:
@@ -131,7 +131,7 @@ paths:
     delete:
       tags:
       - Listeners
-      summary: Deletes a listener
+      summary: Delete listener
       description: Deletes a listener.
       operationId: DeleteListener
       consumes: []
@@ -160,6 +160,8 @@ paths:
     get:
       tags:
       - Logs
+      summary: Get logs
+      description: Gets the logs.
       operationId: Get
       consumes: []
       produces:
@@ -168,6 +170,13 @@ paths:
       responses:
         200:
           description: Success
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7ListenerLog'
+              
+            
           
       
     
@@ -175,7 +184,8 @@ paths:
     get:
       tags:
       - Logs
-      summary: Get list of all logs with in a timespan of give senconds.
+      summary: Get logs within seconds
+      description: Get list of all logs with in a timespan of give senconds.
       operationId: GetWithin
       consumes: []
       produces:
@@ -191,6 +201,13 @@ paths:
       responses:
         200:
           description: Success
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7ListenerLog'
+              
+            
           
       
     
@@ -198,13 +215,22 @@ paths:
     get:
       tags:
       - Status
+      description: Checks the health status of the server.
       operationId: HealthCheck
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters: []
       responses:
         200:
-          description: Success
+          description: The health of the server
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              type: string
+              
+            
           
       
     
@@ -212,13 +238,22 @@ paths:
     get:
       tags:
       - Status
+      description: Checks the version of the server.
       operationId: Version
       consumes: []
-      produces: []
+      produces:
+      - application/json
       parameters: []
       responses:
         200:
-          description: Success
+          description: The version of the server
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              type: string
+              
+            
           
       
     
@@ -281,5 +316,24 @@ definitions:
     additionalProperties:
       type: object
       
+    
+  HL7ListenerLog:
+    type: object
+    properties:
+      id:
+        
+        type: integer
+        
+      message:
+        type: string
+        
+      time:
+        format: int64
+        type: integer
+        
+    example:
+      id: 1
+      time: 2019-08-16 12:06 PM
+      message: Starting listener on 0.0.0.0:50500
     
 
