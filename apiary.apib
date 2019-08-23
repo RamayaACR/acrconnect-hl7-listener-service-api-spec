@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: v1
-  title: ACR HL7 Listener test changes Barcelona
+  title: ACR HL7 Listener
   description: Service for receiving HL7 messages
   
 paths:
@@ -57,6 +57,29 @@ paths:
           
         500:
           description: Server error
+          
+      
+    
+  /api/Listeners/test:
+    get:
+      tags:
+      - Listeners
+      summary: Get test method
+      description: This method is used for demo only
+      operationId: GetTestListeners
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        205:
+          description: response 205
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
+          
+        500:
+          description: response 500
           
       
     
@@ -333,7 +356,7 @@ definitions:
         
     example:
       id: 1
-      time: 2019-08-19 02:08 PM
+      time: 2019-08-23 12:05 PM
       message: Starting listener on 0.0.0.0:50500
     
 
