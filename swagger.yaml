@@ -1,0 +1,337 @@
+swagger: '2.0'
+info:
+  version: v1
+  title: ACR HL7 Listener test changes Barcelona
+  description: Service for receiving HL7 messages
+  
+paths:
+  /api/Listeners:
+    get:
+      tags:
+      - Listeners
+      summary: Get all listeners
+      description: Obtains all available listeners for the running service.
+      operationId: GetListeners
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: Returns the available listeners
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7MessageListener'
+              
+            
+          
+        500:
+          description: Bad input parameter
+          
+      
+    post:
+      tags:
+      - Listeners
+      summary: Post listener
+      description: Adds a listener.
+      operationId: PostListener
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: listener
+        in: body
+        
+        schema:
+          $ref: '#/definitions/HL7MessageListener'
+          
+      responses:
+        201:
+          description: Listener created
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
+          
+        500:
+          description: Server error
+          
+      
+    
+  /api/Listeners/{id}:
+    get:
+      tags:
+      - Listeners
+      summary: Get listener
+      description: Gets a listener by its id.
+      operationId: GetListener
+      consumes: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        
+        
+      responses:
+        200:
+          description: Success
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
+          
+        500:
+          description: Server error
+          
+      
+    put:
+      tags:
+      - Listeners
+      summary: Put listener
+      description: Updates a listener specified by the given id.
+      operationId: PutListener
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        
+        
+      - name: listener
+        in: body
+        
+        schema:
+          $ref: '#/definitions/HL7MessageListener'
+          
+      responses:
+        200:
+          description: Updated listener
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
+          
+        400:
+          description: Mismatch between passed id and listener id
+          schema:
+            $ref: '#/definitions/ProblemDetails'
+            
+          
+        500:
+          description: Server error
+          
+      
+    delete:
+      tags:
+      - Listeners
+      summary: Delete listener
+      description: Deletes a listener.
+      operationId: DeleteListener
+      consumes: []
+      produces:
+      - application/json
+      parameters:
+      - name: id
+        in: path
+        required: true
+        type: integer
+        
+        
+      responses:
+        200:
+          description: Listener deleted
+          schema:
+            $ref: '#/definitions/HL7MessageListener'
+            
+          
+        500:
+          description: Server error
+          
+      
+    
+  /api/Logs:
+    get:
+      tags:
+      - Logs
+      summary: Get logs
+      description: Gets the logs.
+      operationId: Get
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: Success
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7ListenerLog'
+              
+            
+          
+      
+    
+  /api/Logs/in/{seconds}:
+    get:
+      tags:
+      - Logs
+      summary: Get logs within seconds
+      description: Get list of all logs with in a timespan of give senconds.
+      operationId: GetWithin
+      consumes: []
+      produces:
+      - application/json
+      parameters:
+      - name: seconds
+        in: path
+        description: Specify number of seconds, to retrieve all recent logs logged in the timespan.
+        required: true
+        type: integer
+        
+        
+      responses:
+        200:
+          description: Success
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7ListenerLog'
+              
+            
+          
+      
+    
+  /api/Status/healthcheck:
+    get:
+      tags:
+      - Status
+      description: Checks the health status of the server.
+      operationId: HealthCheck
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: The health of the server
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              type: string
+              
+            
+          
+      
+    
+  /api/Status/version:
+    get:
+      tags:
+      - Status
+      description: Checks the version of the server.
+      operationId: Version
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: The version of the server
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              type: string
+              
+            
+          
+      
+    
+definitions:
+  HL7MessageListener:
+    type: object
+    properties:
+      id:
+        
+        type: integer
+        
+      ipAddress:
+        type: string
+        
+      port:
+        
+        type: integer
+        
+      name:
+        type: string
+        
+      status:
+        
+        description: >2-
+
+
+          0 = Idle
+
+          1 = Listening
+        enum:
+        - Idle
+        - Listening
+        type: integer
+        
+    example:
+      id: 1
+      iPAddress: 0.0.0.0
+      port: 50500
+      name: Test HL7
+    
+  ProblemDetails:
+    type: object
+    properties:
+      type:
+        type: string
+        
+      title:
+        type: string
+        
+      status:
+        
+        type: integer
+        
+      detail:
+        type: string
+        
+      instance:
+        type: string
+        
+    additionalProperties:
+      type: object
+      
+    
+  HL7ListenerLog:
+    type: object
+    properties:
+      id:
+        
+        type: integer
+        
+      message:
+        type: string
+        
+      time:
+        
+        type: integer
+        
+    example:
+      id: 1
+      time: 2019-08-19 02:08 PM
+      message: Starting listener on 0.0.0.0:50500
