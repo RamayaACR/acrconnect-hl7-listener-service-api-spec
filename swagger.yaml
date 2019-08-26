@@ -60,33 +60,6 @@ paths:
           
       
     
-  /api/Listeners/test:
-    get:
-      tags:
-      - Listeners
-      summary: Get all listeners
-      description: Obtains all available listeners for the running service.
-      operationId: GetListenersTest
-      consumes: []
-      produces:
-      - application/json
-      parameters: []
-      responses:
-        200:
-          description: Returns the available listeners
-          schema:
-            uniqueItems: false
-            type: array
-            items:
-              $ref: '#/definitions/HL7MessageListener'
-              
-            
-          
-        500:
-          description: Bad input parameter
-          
-      
-    
   /api/Listeners/{id}:
     get:
       tags:
@@ -360,7 +333,7 @@ definitions:
         
     example:
       id: 1
-      time: 2019-08-26 11:12 AM
+      time: 2019-08-26 12:15 PM
       message: Starting listener on 0.0.0.0:50500
     
 
