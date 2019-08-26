@@ -60,6 +60,33 @@ paths:
           
       
     
+  /api/Listeners/TestDemo:
+    get:
+      tags:
+      - Listeners
+      summary: Get Test Method
+      description: This is a testing method to demo automatic generation of API documentation
+      operationId: DemoMethod
+      consumes: []
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: Success
+          schema:
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7MessageListener'
+              
+            
+          
+        500:
+          description: Bad input parameter
+          
+      
+    
   /api/Listeners/{id}:
     get:
       tags:
@@ -333,7 +360,7 @@ definitions:
         
     example:
       id: 1
-      time: 2019-08-26 12:15 PM
+      time: 2019-08-26 01:13 PM
       message: Starting listener on 0.0.0.0:50500
     
 
