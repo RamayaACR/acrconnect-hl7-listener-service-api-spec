@@ -346,9 +346,14 @@ MigrationBackup/
 #files to exclude for this repo alone for sercurity purposes
 src/
 tests/
+scripts/
+analysis/
 .vscode/
 Dockerfile
+Dockerfile.*
 .dockerignore
-AcrConnect.HL7.Listener.sln
+*.sln
+*.sln.*
 docker-compose.yml
 .vs
+README.md

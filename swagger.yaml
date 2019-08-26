@@ -64,22 +64,26 @@ paths:
     get:
       tags:
       - Listeners
-      summary: Get test method
-      description: This method is used for demo only
-      operationId: GetTestListeners
+      summary: Get all listeners
+      description: Obtains all available listeners for the running service.
+      operationId: GetListenersTest
       consumes: []
       produces:
       - application/json
       parameters: []
       responses:
-        205:
-          description: response 205
+        200:
+          description: Returns the available listeners
           schema:
-            $ref: '#/definitions/HL7MessageListener'
+            uniqueItems: false
+            type: array
+            items:
+              $ref: '#/definitions/HL7MessageListener'
+              
             
           
         500:
-          description: response 500
+          description: Bad input parameter
           
       
     
@@ -356,7 +360,7 @@ definitions:
         
     example:
       id: 1
-      time: 2019-08-23 12:05 PM
+      time: 2019-08-26 11:12 AM
       message: Starting listener on 0.0.0.0:50500
     
 
